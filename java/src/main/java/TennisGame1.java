@@ -5,6 +5,7 @@ public class TennisGame1 implements TennisGame {
     public static final String ONE_POINT_STRING = "Fifteen";
     public static final String TWO_POINTS_STRING = "Thirty";
     public static final String THREE_POINTS_STRING = "Forty";
+    public static final String DEUCE_STRING = "Deuce";
     private int m_score1 = 0;
     private int m_score2 = 0;
     private String player1Name;
@@ -47,7 +48,7 @@ public class TennisGame1 implements TennisGame {
                         score = new StringBuilder("Thirty-All");
                     break;
                 default:
-                        score = new StringBuilder("Deuce");
+                        score = new StringBuilder(DEUCE_STRING);
                     break;
 
             }
@@ -62,28 +63,19 @@ public class TennisGame1 implements TennisGame {
         }
         else
         {
-            for (int i=1; i<3; i++)
-            {
-                if (i==1) tempScore = m_score1;
-                else { score.append("-"); tempScore = m_score2;}
-                switch(tempScore)
-                {
-                    case 0:
-                        score.append(ZERO_POINTS_STRING);
-                        break;
-                    case 1:
-                        score.append(ONE_POINT_STRING);
-                        break;
-                    case 2:
-                        score.append(TWO_POINTS_STRING);
-                        break;
-                    case 3:
-                        score.append(THREE_POINTS_STRING);
-                        break;
-                }
-            }
+            score.append(getPointString(m_score1)).append("-").append(getPointString(m_score2));
         }
         return score.toString();
+    }
+
+    private String getPointString(int tempScore ) {
+        return switch (tempScore) {
+            case 0 -> ZERO_POINTS_STRING;
+            case 1 -> ONE_POINT_STRING;
+            case 2 -> TWO_POINTS_STRING;
+            case 3 -> THREE_POINTS_STRING;
+            default -> "";
+        };
     }
 
     private boolean isAdvantageGame() {
